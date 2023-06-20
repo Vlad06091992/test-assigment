@@ -2,7 +2,6 @@ import {observer} from "mobx-react";
 import React from "react";
 import {TaskType} from "../components/TaskList";
 import {taskStore} from "../store";
-import {TreeItem} from "@mui/lab";
 
 export const Task = observer(({task}: { task: TaskType }) => {
     const handleAddSubtask = () => {

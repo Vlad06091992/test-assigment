@@ -1,46 +1,29 @@
 import React from 'react';
-import {observer} from 'mobx-react';
-import {makeObservable, observable, action, toJS} from 'mobx';
-import {v1} from 'uuid'
-import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
+import {makeObservable, observable} from 'mobx';
 import {TaskList, TaskType} from "./components/TaskList";
-import {RenderTree} from "./utils/renderTree";
-
-
-
-
-
-
-
 
 
 export class Task {
     title: string;
     subtasks: TaskType[];
     id: string;
+    checked: boolean | undefined
 
     constructor(title: string, subtasks: TaskType[] = [], id: string) {
+
         makeObservable(this, {
             title: observable,
             subtasks: observable,
-            id: observable
+            id: observable,
+            checked:observable
         });
 
         this.title = title;
         this.subtasks = subtasks;
         this.id = id
+        this.checked = false
     }
 }
-
-
-
-
-
-
-
 
 const App = () => {
     return (
@@ -50,8 +33,6 @@ const App = () => {
         </div>
     );
 };
-
-
 
 export default App;
 

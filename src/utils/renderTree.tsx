@@ -1,45 +1,55 @@
 import {TreeItem} from "@mui/lab";
-import {toJS} from "mobx";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {Checkbox} from "@mui/material";
+import {observer} from "mobx-react";
+import {taskStore} from "../store";
 
 interface RenderTree {
+    parentsChecked?:boolean
     id: string;
+    checked?: boolean
     title: string;
     subTasks?: readonly RenderTree[];
 }
 
 
-const data: RenderTree = {
-    id: 'root',
-    title: 'Parent',
-    subTasks: [
-        {
-            id: '1',
-            title: 'Child - 1',
-        },
-        {
-            id: '3',
-            title: 'Child - 3',
-            subTasks: [
-                {
-                    id: '4',
-                    title: 'Child - 4',
-                },
-            ],
-        },
-    ],
-};
+export const RenderTree = observer( (task: RenderTree) => {
+    const [checked, setChecked] = useState(task.parentsChecked)
 
 
-export const RenderTree = (nodes: RenderTree) => {
+    useEffect(() => {
+        setChecked(task.parentsChecked);
+    }, [task.parentsChecked]);
 
-  let arr = toJS(nodes.subTasks)
-    debugger
-    console.log(arr)
 
-   return ( <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.title} >
-    {Array.isArray(arr)
-            ? arr.map((task) => <RenderTree key={task.id} id={task.id} title={task.title} subTasks={task.subtasks}/>)
+
+    return (<TreeItem key={task.id} nodeId={task.id} label={
+        <>
+            <Checkbox
+                checked={checked}
+                tabIndex={-1}
+                disableRipple
+                // onClick={(event) => {
+                //     event.stopPropagation()
+                //     taskStore.checkedTask(task.id)
+                // }}
+
+                onClick={(event) => {
+                    event.stopPropagation();
+                    setChecked(!checked);
+                    taskStore.checkedTask(task.id);
+                }}
+
+            />
+            {task.title}
+        </>
+    }
+
+
+    >
+        {Array.isArray(task.subTasks)
+            ? task.subTasks.map((task) => <RenderTree parentsChecked={checked} checked={task.checked} key={task.id} id={task.id}
+                                                       title={task.title} subTasks={task.subtasks}/>)
             : null}
-    </TreeItem> )
-};
+    </TreeItem>)
+});
