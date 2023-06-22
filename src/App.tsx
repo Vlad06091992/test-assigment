@@ -3,6 +3,7 @@ import {makeObservable, observable} from 'mobx';
 import {TaskList, TaskType} from "../src/components/TaskList/TaskList";
 import {TaskInfo} from "../src/components/TaskInfo/TaskInfo";
 import styles from './App.module.scss'
+import {v1} from "uuid";
 
 
 export class Task {
@@ -11,7 +12,7 @@ export class Task {
     id: string;
     checked: boolean | undefined
 
-    constructor(title: string, subtasks: TaskType[] = [], id: string) {
+    constructor(title: string, subtasks: TaskType[] = []) {
 
         makeObservable(this, {
             title: observable,
@@ -22,7 +23,7 @@ export class Task {
 
         this.title = title;
         this.subtasks = subtasks;
-        this.id = id
+        this.id = v1()
         this.checked = false
     }
 }

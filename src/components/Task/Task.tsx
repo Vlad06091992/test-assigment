@@ -5,10 +5,8 @@ import {taskStore} from "../../../src/store";
 
 export const Task = observer(({task}: { task: TaskType }) => {
     const handleAddSubtask = () => {
-        const newSubtask = prompt('Enter subtask title:') || 'newsubTask';
-        if (newSubtask.trim() !== '') {
-            taskStore.addSubtask(task.id, newSubtask);
-        }
+        taskStore.addSubtask(task.id);
+
     };
 
     return (

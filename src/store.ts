@@ -71,7 +71,8 @@ class TaskStore {
             addTask: action,
             addSubtask: action,
             checkedTask: action,
-            removeCheckedTasks: action
+            removeCheckedTasks: action,
+            editTaskDescription:action
         });
         this.getData()
     }
@@ -88,16 +89,27 @@ class TaskStore {
     addTask(title: string) {
         debugger
         console.log(this.taskList)
-        const task = new Task(title, [], v1());
+        const task = new Task(title, []);
         this.taskList.push(task);
     }
 
-    addSubtask(taskId: string, title: string) {
-        let arr = findSubtasksById(this.taskList, taskId)
-        arr.push({
-            id: v1(), title: title,
-            subtasks: [],
-        })
+    addSubtask(taskId: string | undefined) {
+
+        let title = prompt('enter title')
+
+        if(taskId){
+            let task = findTaskById(this.taskList,taskId)
+            task.subtasks.push(
+
+                new Task(title || 'title',[],)
+
+            )
+        }
+
+
+
+
+
     }
 
     checkedTask(taskId: string, status: boolean) {
@@ -115,6 +127,14 @@ class TaskStore {
         this.currentTask = null
     }
 
+    editTaskDescription(taskId:string | undefined){
+        if(taskId){
+            let task = findTaskById(this.taskList,taskId)
+            let desc = prompt('enter description')
+            task.description = desc
+        }
+
+    }
 
 }
 

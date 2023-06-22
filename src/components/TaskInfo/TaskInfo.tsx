@@ -8,6 +8,10 @@ export const TaskInfo =observer( () => {
 
     return <div className={styles.TaskInfo}>info :)
 
+        <button onClick={()=>taskStore.addSubtask(taskStore.currentTask?.id)}>add subtask</button>
+        <button onClick={()=>taskStore.editTaskDescription(taskStore.currentTask?.id)}>edit description</button>
+
+
         <div>
             <div>{taskStore.currentTask?.title || 'set task'}</div>
             <div>{taskStore.currentTask?.description}</div>
