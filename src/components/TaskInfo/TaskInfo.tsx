@@ -11,49 +11,63 @@ export const TaskInfo = observer(() => {
   let [findRes, setFindRes] = useState<any>("");
 
   const setTitleHandler = () => {
-    taskStore.addSubtask(taskStore.currentTask?.id, title);
+    taskStore.addSubtask(taskStore.currentTask?.id, title.trim());
     setTitle("");
   };
 
   const setEditTaskDescriptionHandler = () => {
-    taskStore.editTaskDescription(taskStore.currentTask?.id, description);
+    taskStore.editTaskDescription(
+      taskStore.currentTask?.id,
+      description.trim()
+    );
     setDescription("");
   };
 
   const findHandler = () => {
-    setFindRes(taskStore.findTask(find));
+    setFindRes(taskStore.findTask(find.trim()));
     setFind("");
   };
 
   return (
-    <div className={styles.TaskInfo}>
-      info :)
+    <div
+      className={`${styles.TaskInfo} ${
+        taskStore.isDarkMode ? styles.TaskInfoDark : ""
+      }`}
+    >
       <div>
-        <div>{taskStore.currentTask?.title || "choose a task"}</div>
+        <h2>{taskStore.currentTask?.title}</h2>
         {taskStore.currentTask && (
-          <div>{taskStore.currentTask?.description || "add description"}</div>
+          <h3>
+            {taskStore.currentTask?.description ||
+              "Add description to the current task"}
+          </h3>
         )}
       </div>
       {taskStore.currentTask && (
         <div>
-          <div style={{ margin: "10px" }}>
+          <div className={styles.fieldContainer}>
             <TextField
               value={title}
               onChange={(e: any) => setTitle(e.currentTarget.value)}
               size={"small"}
             />
 
-            <Button variant={"contained"} onClick={setTitleHandler}>
+            <Button
+              sx={{ marginLeft: "10px" }}
+              variant={"contained"}
+              onClick={setTitleHandler}
+            >
               add subtask
             </Button>
           </div>
-          <div style={{ margin: "10px" }}>
+          <div style={{ marginTop: "10px" }}>
             <TextField
               value={description}
               onChange={(e: any) => setDescription(e.currentTarget.value)}
               size={"small"}
             />
             <Button
+              sx={{ marginLeft: "10px" }}
               variant={"contained"}
               onClick={setEditTaskDescriptionHandler}
             >
@@ -69,7 +83,9 @@ export const TaskInfo = observer(() => {
         onChange={(e: any) => setFind(e.currentTarget.value)}
         size={"small"}
       />
-      <Button onClick={findHandler}>find</Button>
+      <Button sx={{ marginLeft: "10px" }} onClick={findHandler}>
+        find
+      </Button>
       {findRes && <div>Not found</div>}
     </div>
   );

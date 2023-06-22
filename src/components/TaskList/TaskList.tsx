@@ -7,6 +7,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import styles from "./TaskList.module.scss";
 import { RenderTree } from "../../components/RenderTree/RenderTree";
+import { Button } from "@mui/material";
 
 export type TaskType = {
   id: string;
@@ -26,13 +27,28 @@ export const TaskList = observer(() => {
     }
   };
 
+  const handleToggle = () => {
+    taskStore.toggleThemeMode();
+  };
+
   return (
     <div className={styles.TaskList}>
+      <button onClick={() => handleToggle()}>Toggle Theme</button>
       <h2>Task List</h2>
-      <button onClick={handleAddTask}>Add Task</button>
-      <button onClick={() => taskStore.removeCheckedTasks()}>
+      <p>choose a task</p>
+      <Button
+        sx={{ margin: "10px" }}
+        variant={"contained"}
+        onClick={handleAddTask}
+      >
+        Add Task
+      </Button>
+      <Button
+        variant={"contained"}
+        onClick={() => taskStore.removeCheckedTasks()}
+      >
         Remove checked tasks
-      </button>
+      </Button>
 
       <TreeView
         aria-label="rich object"

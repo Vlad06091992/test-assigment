@@ -1,11 +1,11 @@
 import { action, autorun, makeObservable, observable, toJS } from "mobx";
 import { TaskType } from "../src/components/TaskList/TaskList";
-import { Task } from "./App";
 import { findTaskById } from "./utils/findTaskById";
 import { removeCheckedItems } from "./utils/removeCheckedItems";
 
 import makeInspectable from "mobx-devtools-mst";
 import { findTaskByTitle } from "./utils/findTaskByTitle";
+import { v1 } from "uuid";
 
 class TaskStore {
   taskList: TaskType[] = [
@@ -60,17 +60,20 @@ class TaskStore {
   ];
 
   currentTask = null as TaskType | null;
+  isDarkMode = false;
 
   constructor() {
     makeObservable(this, {
       taskList: observable,
       currentTask: observable,
+      isDarkMode: observable,
       addTask: action,
       addSubtask: action,
       checkedTask: action,
       removeCheckedTasks: action,
       editTaskDescription: action,
       findTask: action,
+      toggleThemeMode: action,
     });
     this.getData();
   }
@@ -124,6 +127,32 @@ class TaskStore {
       let task = findTaskById(this.taskList, taskId);
       if (task) task.description = desc;
     }
+  }
+
+  toggleThemeMode() {
+    debugger;
+    this.isDarkMode = !this.isDarkMode;
+  }
+}
+
+export class Task {
+  title: string;
+  subtasks: TaskType[];
+  id: string;
+  checked: boolean | undefined;
+
+  constructor(title: string, subtasks: TaskType[] = []) {
+    makeObservable(this, {
+      title: observable,
+      subtasks: observable,
+      id: observable,
+      checked: observable,
+    });
+
+    this.title = title;
+    this.subtasks = subtasks;
+    this.id = v1();
+    this.checked = false;
   }
 }
 

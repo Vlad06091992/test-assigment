@@ -1,6 +1,30 @@
 .TaskInfo {
-  text-align: center;
+  padding: 10px;
+  //text-align:
   background: #DCE0E1;
   width: 50%;
   min-height: 100vh;
+  h2{
+    text-align: center;
+  }
+
+  h3{
+    text-align: center;
+  }
+}
+
+.TaskInfoDark {
+  padding: 10px;
+  //text-align:
+  background: #0b0c0c;
+  color:white;
+  width: 50%;
+  min-height: 100vh;
+  h2{
+    text-align: center;
+  }
+
+  h3{
+    text-align: center;
+  }
 }
