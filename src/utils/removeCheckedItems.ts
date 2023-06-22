@@ -1,4 +1,4 @@
-import {TaskType} from "../components/TaskList";
+import {TaskType} from "../../src/components/TaskList/TaskList";
 
 export function removeCheckedItems(taskList:TaskType[]) {
 

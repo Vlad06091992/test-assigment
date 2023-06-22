@@ -1,81 +1,94 @@
-import {action, makeObservable, observable} from "mobx";
+import {action, autorun, makeObservable, observable, toJS} from "mobx";
 import {v1} from "uuid";
-import {TaskType} from "./components/TaskList";
+import {TaskType} from "../src/components/TaskList/TaskList";
 import {findSubtasksById} from "./utils/findSubtasksById";
 import {Task} from "./App";
 import {findTaskById} from "./utils/findTaskById";
 import {removeCheckedItems} from "./utils/removeCheckedItems";
 
+
+import makeInspectable from 'mobx-devtools-mst';
+
+
 class TaskStore {
     taskList: TaskType[] = [
         {
             title: 'Task 1',
-            checked:false,
+            description: "my first task",
+            checked: false,
             id: 'abc',
             subtasks: [
                 {
                     title: 'Task 1.1',
-                    checked:false,
+                    description: "my first subtask",
+                    checked: false,
                     id: 'def',
                     subtasks: [
                         {
                             title: 'Task 1.1.1',
-                            checked:false,
+                            checked: false,
                             id: 'ghi',
                             subtasks: [
                                 {
                                     title: 'Task 1.1.1.1',
-                                    checked:false,
+                                    checked: false,
                                     id: 'jkl',
-                                    subtasks: [
-
-                                    ]
+                                    subtasks: []
                                 }
                             ]
                         }
                     ]
                 }
             ]
-        },{
+        }, {
             title: 'Task 2',
-            checked:false,
+            checked: false,
             id: 'mnp',
             subtasks: [
                 {
                     title: 'Task 2.1',
-                    checked:false,
+                    checked: false,
                     id: 'fkdfd',
-                    subtasks: [
-
-                    ]
+                    subtasks: []
                 }
             ]
         },
         {
             title: 'Task 3',
-            checked:false,
+            checked: false,
             id: 'fksdl',
-            subtasks: [
-
-            ]
-        }
+            subtasks: []
+        },
 
     ];
+
+    currentTask = {} as TaskType | null
 
     constructor() {
         makeObservable(this, {
             taskList: observable,
+            currentTask: observable,
             addTask: action,
             addSubtask: action,
             checkedTask: action,
-            removeCheckedTasks:action
+            removeCheckedTasks: action
         });
+        this.getData()
     }
+
+
+    getData() {
+        let savedValue = localStorage.getItem('someValue');
+        if (savedValue) {
+            this.taskList = JSON.parse(savedValue);
+        }
+    }
+
 
     addTask(title: string) {
         debugger
         console.log(this.taskList)
-        const task = new Task(title,[], v1());
+        const task = new Task(title, [], v1());
         this.taskList.push(task);
     }
 
@@ -87,18 +100,37 @@ class TaskStore {
         })
     }
 
-    checkedTask(taskId: string) {
-        let task = findTaskById(this.taskList,taskId)
-        task.checked = !task.checked
+    checkedTask(taskId: string, status: boolean) {
+        let task = findTaskById(this.taskList, taskId)
+        task.checked = status
     }
+
+    setCurrentTask(id: string) {
+        this.currentTask = findTaskById(this.taskList, id)
+    }
+
 
     removeCheckedTasks() {
-       this.taskList =  removeCheckedItems(this.taskList)
+        this.taskList = removeCheckedItems(this.taskList)
+        this.currentTask = null
     }
-
-
 
 
 }
 
 export const taskStore = new TaskStore();
+
+
+makeInspectable(taskStore);
+
+
+autorun(() => {
+    localStorage.setItem('someValue', JSON.stringify(taskStore.taskList))
+
+    console.log(toJS(taskStore.taskList))
+
+    // Код, который будет выполнен при каждом изменении стейта
+    console.log("State has changed");
+});
+
+

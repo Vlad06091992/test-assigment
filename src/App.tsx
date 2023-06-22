@@ -1,6 +1,8 @@
 import React from 'react';
 import {makeObservable, observable} from 'mobx';
-import {TaskList, TaskType} from "./components/TaskList";
+import {TaskList, TaskType} from "../src/components/TaskList/TaskList";
+import {TaskInfo} from "../src/components/TaskInfo/TaskInfo";
+import styles from './App.module.scss'
 
 
 export class Task {
@@ -15,7 +17,7 @@ export class Task {
             title: observable,
             subtasks: observable,
             id: observable,
-            checked:observable
+            checked: observable
         });
 
         this.title = title;
@@ -27,35 +29,14 @@ export class Task {
 
 const App = () => {
     return (
-        <div>
-            <TaskList/>
-
+        <div className={styles.App}>
+            <TaskList />
+            <TaskInfo />
         </div>
     );
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // import React from 'react';

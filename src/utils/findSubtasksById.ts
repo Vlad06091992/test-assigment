@@ -1,4 +1,4 @@
-import {TaskType} from "../components/TaskList";
+import {TaskType} from "../../src/components/TaskList/TaskList";
 
 export function findSubtasksById(taskList: TaskType[] | any, id: string): any {
     for (const task of taskList) {
