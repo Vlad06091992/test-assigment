@@ -7,8 +7,8 @@ import { useState } from "react";
 export const TaskInfo = observer(() => {
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
-  let [find, setFind] = useState("");
-  let [findRes, setFindRes] = useState<any>("");
+  let [findText, setFindText] = useState("");
+  let [findRes, setFindRes] = useState<string | undefined>("");
 
   const setTitleHandler = () => {
     if (title.length > 0) {
@@ -28,8 +28,8 @@ export const TaskInfo = observer(() => {
   };
 
   const findHandler = () => {
-    setFindRes(taskStore.findTask(find.trim()));
-    setFind("");
+    setFindRes(taskStore.findTask(findText.trim()));
+    setFindText("");
   };
 
   return (
@@ -46,7 +46,7 @@ export const TaskInfo = observer(() => {
               "Add description to the current task"}
           </h3>
         )}
-        <div>please enter data</div>
+        <div>please enter the data</div>
       </div>
       {taskStore.currentTask && (
         <div>
@@ -78,20 +78,24 @@ export const TaskInfo = observer(() => {
               variant={"contained"}
               onClick={setEditTaskDescriptionHandler}
             >
-              edit description
+              edit task description
             </Button>
           </div>
         </div>
       )}
-      <div>find task</div>
       <TextField
         onFocus={() => setFindRes("")}
-        value={find}
-        onChange={(e: any) => setFind(e.currentTarget.value)}
+        value={findText}
+        onChange={(e: any) => setFindText(e.currentTarget.value)}
         size={"small"}
       />
-      <Button sx={{ marginLeft: "10px" }} onClick={findHandler}>
-        find
+      <Button
+        disabled={findText.length == 0}
+        variant={"contained"}
+        sx={{ marginLeft: "10px" }}
+        onClick={findHandler}
+      >
+        find task
       </Button>
       {findRes && <div>Not found</div>}
     </div>
