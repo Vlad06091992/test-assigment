@@ -130,7 +130,6 @@ class TaskStore {
   }
 
   toggleThemeMode() {
-    debugger;
     this.isDarkMode = !this.isDarkMode;
   }
 }
