@@ -11,15 +11,19 @@ export const TaskInfo = observer(() => {
   let [findRes, setFindRes] = useState<any>("");
 
   const setTitleHandler = () => {
-    taskStore.addSubtask(taskStore.currentTask?.id, title.trim());
-    setTitle("");
+    if (title.length > 0) {
+      taskStore.addSubtask(taskStore.currentTask?.id, title.trim());
+      setTitle("");
+    }
   };
 
   const setEditTaskDescriptionHandler = () => {
-    taskStore.editTaskDescription(
-      taskStore.currentTask?.id,
-      description.trim()
-    );
+    if (description.length > 0) {
+      taskStore.editTaskDescription(
+        taskStore.currentTask?.id,
+        description.trim()
+      );
+    }
     setDescription("");
   };
 
@@ -42,6 +46,7 @@ export const TaskInfo = observer(() => {
               "Add description to the current task"}
           </h3>
         )}
+        <div>please enter data</div>
       </div>
       {taskStore.currentTask && (
         <div>
@@ -53,6 +58,7 @@ export const TaskInfo = observer(() => {
             />
 
             <Button
+              disabled={title.length == 0}
               sx={{ marginLeft: "10px" }}
               variant={"contained"}
               onClick={setTitleHandler}
@@ -67,6 +73,7 @@ export const TaskInfo = observer(() => {
               size={"small"}
             />
             <Button
+              disabled={description.length == 0}
               sx={{ marginLeft: "10px" }}
               variant={"contained"}
               onClick={setEditTaskDescriptionHandler}
