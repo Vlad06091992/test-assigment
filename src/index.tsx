@@ -24,7 +24,7 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#cb3312", // Main color
+      main: "#0b167c", // Main color
     },
     secondary: {
       main: "#f48fb1", // Secondary color
@@ -35,7 +35,7 @@ const darkTheme = createTheme({
     MuiCheckbox: {
       styleOverrides: {
         root: {
-          color: "#cb3312", // Border color
+          color: "#090d38", // Border color
         },
       },
     },
