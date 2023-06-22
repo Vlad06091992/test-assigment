@@ -26,7 +26,7 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#cb3312", // Основной цвет
+      main: "#033773", // Основной цвет
     },
     secondary: {
       main: "#2c33b9", // Вторичный цвет

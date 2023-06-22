@@ -33,7 +33,13 @@ export const TaskList = observer(() => {
 
   return (
     <div className={styles.TaskList}>
-      <button onClick={() => handleToggle()}>Toggle Theme</button>
+      <Button
+        sx={{ margin: "10px" }}
+        variant={"contained"}
+        onClick={() => handleToggle()}
+      >
+        Toggle Theme
+      </Button>
       <h2>Task List</h2>
       <p>choose a task</p>
       <Button
