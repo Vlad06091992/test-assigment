@@ -3,7 +3,7 @@ import { TaskType } from "../../src/components/TaskList/TaskList";
 export function findTaskByTitle(
   taskList: TaskType[] | any,
   title: string
-): any {
+): TaskType | null {
   for (const task of taskList) {
     if (task.title === title) {
       return task;

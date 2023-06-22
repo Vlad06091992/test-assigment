@@ -90,7 +90,7 @@ class TaskStore {
   addSubtask(taskId: string | undefined, title: string) {
     if (taskId) {
       let task = findTaskById(this.taskList, taskId);
-      task.subtasks.push(new Task(title || "title", []));
+      task?.subtasks?.push(new Task(title || "title", []));
     }
   }
 
@@ -107,7 +107,7 @@ class TaskStore {
 
   checkedTask(taskId: string, status: boolean) {
     let task = findTaskById(this.taskList, taskId);
-    task.checked = status;
+    if (task) task.checked = status;
   }
 
   setCurrentTask(id: string) {
@@ -122,7 +122,7 @@ class TaskStore {
   editTaskDescription(taskId: string | undefined, desc: string) {
     if (taskId) {
       let task = findTaskById(this.taskList, taskId);
-      task.description = desc;
+      if (task) task.description = desc;
     }
   }
 }
@@ -133,9 +133,4 @@ makeInspectable(taskStore);
 
 autorun(() => {
   localStorage.setItem("someValue", JSON.stringify(taskStore.taskList));
-
-  console.log(toJS(taskStore.taskList));
-
-  // Код, который будет выполнен при каждом изменении стейта
-  console.log("State has changed");
 });
