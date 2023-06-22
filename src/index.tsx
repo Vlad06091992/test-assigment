@@ -24,32 +24,23 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#033773",
+      main: "#cb3312", // Main color
     },
     secondary: {
-      main: "#2c33b9",
+      main: "#f48fb1", // Secondary color
     },
+    // Additional colors and settings
   },
   components: {
     MuiCheckbox: {
       styleOverrides: {
         root: {
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              borderColor: "red",
-            },
-          },
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          borderColor: "#94d90c",
+          color: "#cb3312", // Border color
         },
       },
     },
   },
+  // Other theme parameters for dark mode
 });
 
 const RootComponent = observer(() => {
