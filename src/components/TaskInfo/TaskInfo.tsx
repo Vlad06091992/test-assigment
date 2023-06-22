@@ -83,21 +83,23 @@ export const TaskInfo = observer(() => {
           </div>
         </div>
       )}
-      <TextField
-        onFocus={() => setFindRes("")}
-        value={findText}
-        onChange={(e: any) => setFindText(e.currentTarget.value)}
-        size={"small"}
-      />
-      <Button
-        disabled={findText.length == 0}
-        variant={"contained"}
-        sx={{ marginLeft: "10px" }}
-        onClick={findHandler}
-      >
-        find task
-      </Button>
-      {findRes && <div>Not found</div>}
+      <div style={{ marginTop: "10px" }}>
+        <TextField
+          onFocus={() => setFindRes("")}
+          value={findText}
+          onChange={(e: any) => setFindText(e.currentTarget.value)}
+          size={"small"}
+        />
+        <Button
+          disabled={findText.length == 0}
+          variant={"contained"}
+          sx={{ marginLeft: "10px" }}
+          onClick={findHandler}
+        >
+          find task
+        </Button>
+        {findRes && <div>Not found</div>}
+      </div>
     </div>
   );
 });
