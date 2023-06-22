@@ -1,16 +1,19 @@
-import {TaskType} from "../../src/components/TaskList/TaskList";
+import { TaskType } from "../../src/components/TaskList/TaskList";
 
-export function findTaskByTitle(taskList: TaskType[] | any, title: string): any {
-    for (const task of taskList) {
-        if (task.title === title) {
-            return task
-        } else {
-            const subtasks = findTaskByTitle(task.subtasks, title);
-            if (subtasks) {
-                return subtasks;
-            }
-        }
+export function findTaskByTitle(
+  taskList: TaskType[] | any,
+  title: string
+): any {
+  for (const task of taskList) {
+    if (task.title === title) {
+      return task;
+    } else {
+      const subtasks = findTaskByTitle(task.subtasks, title);
+      if (subtasks) {
+        return subtasks;
+      }
     }
+  }
 
-    return null;
+  return null;
 }
