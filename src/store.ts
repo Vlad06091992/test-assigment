@@ -1,13 +1,12 @@
 import {action, autorun, makeObservable, observable, toJS} from "mobx";
-import {v1} from "uuid";
 import {TaskType} from "../src/components/TaskList/TaskList";
-import {findSubtasksById} from "./utils/findSubtasksById";
 import {Task} from "./App";
 import {findTaskById} from "./utils/findTaskById";
 import {removeCheckedItems} from "./utils/removeCheckedItems";
 
 
 import makeInspectable from 'mobx-devtools-mst';
+import {findTaskByTitle} from "./utils/findTaskByTitle";
 
 
 class TaskStore {
@@ -62,7 +61,7 @@ class TaskStore {
 
     ];
 
-    currentTask = {} as TaskType | null
+    currentTask = null as TaskType | null
 
     constructor() {
         makeObservable(this, {
@@ -72,7 +71,8 @@ class TaskStore {
             addSubtask: action,
             checkedTask: action,
             removeCheckedTasks: action,
-            editTaskDescription:action
+            editTaskDescription: action,
+            findTask:action
         });
         this.getData()
     }
@@ -93,23 +93,25 @@ class TaskStore {
         this.taskList.push(task);
     }
 
-    addSubtask(taskId: string | undefined) {
-
-        let title = prompt('enter title')
-
-        if(taskId){
-            let task = findTaskById(this.taskList,taskId)
+    addSubtask(taskId: string | undefined, title: string) {
+        if (taskId) {
+            let task = findTaskById(this.taskList, taskId)
             task.subtasks.push(
-
-                new Task(title || 'title',[],)
-
+                new Task(title || 'title', [],)
             )
         }
+    }
 
 
-
-
-
+    findTask(title: string) {
+        if (title) {
+            let task = findTaskByTitle(this.taskList, title)
+          if(task){
+              this.currentTask = task
+          } else {
+              return 'not found'
+          }
+        }
     }
 
     checkedTask(taskId: string, status: boolean) {
@@ -127,10 +129,9 @@ class TaskStore {
         this.currentTask = null
     }
 
-    editTaskDescription(taskId:string | undefined){
-        if(taskId){
-            let task = findTaskById(this.taskList,taskId)
-            let desc = prompt('enter description')
+    editTaskDescription(taskId: string | undefined, desc: string) {
+        if (taskId) {
+            let task = findTaskById(this.taskList, taskId)
             task.description = desc
         }
 
