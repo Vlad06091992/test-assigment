@@ -7,6 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { taskStore } from "../src/store";
 import { observer } from "mobx-react";
+import { createRoot } from "react-dom/client";
 
 const lightTheme = createTheme({
   palette: {
@@ -55,13 +56,5 @@ const RootComponent = observer(() => {
   );
 });
 
-const RootContainer = () => {
-  useEffect(() => {
-    ReactDOM.render(<RootComponent />, document.getElementById("root"));
-  }, [taskStore.isDarkMode]);
-
-  return <RootComponent />;
-};
-
-ReactDOM.render(<RootContainer />, document.getElementById("root"));
-reportWebVitals();
+const root = createRoot(document.getElementById("root") as HTMLElement);
+root.render(<RootComponent />);

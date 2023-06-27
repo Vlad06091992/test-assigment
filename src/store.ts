@@ -3,7 +3,6 @@ import { TaskType } from "../src/components/TaskList/TaskList";
 import { findTaskById } from "./utils/findTaskById";
 import { removeCheckedItems } from "./utils/removeCheckedItems";
 
-import makeInspectable from "mobx-devtools-mst";
 import { findTaskByTitle } from "./utils/findTaskByTitle";
 import { v1 } from "uuid";
 
@@ -67,6 +66,7 @@ class TaskStore {
       taskList: observable,
       currentTask: observable,
       isDarkMode: observable,
+      setCurrentTask: observable,
       addTask: action,
       addSubtask: action,
       checkedTask: action,
@@ -156,8 +156,6 @@ export class Task {
 }
 
 export const taskStore = new TaskStore();
-
-makeInspectable(taskStore);
 
 autorun(() => {
   localStorage.setItem("someValue", JSON.stringify(taskStore.taskList));
