@@ -58,7 +58,6 @@ import { Checkbox } from "@mui/material";
 import { observer } from "mobx-react";
 import { taskStore } from "../../store";
 import { TreeItem } from "../../../src/components/customTreeItem/CustomTreeItem";
-import { TaskType } from "../../../src/components/TaskList/TaskList";
 
 interface RenderTree {
   parentsChecked?: boolean;
@@ -78,7 +77,6 @@ export const RenderTree = observer((task: RenderTree) => {
   return (
     <TreeItem
       id={task.id}
-      // subtasks={task.subtasks}
       label={
         <>
           <Checkbox
