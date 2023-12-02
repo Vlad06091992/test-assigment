@@ -45,7 +45,7 @@ export const TreeItem: React.FC<TreeItemProps> = observer(
             </Button>
           )}
           <span
-            style={children[0] ? {} : { position: "relative", left: "65px" }}
+            style={children.length > 0 ? {} : { position: "relative", left: "65px" }}
           >
             {label}
           </span>
