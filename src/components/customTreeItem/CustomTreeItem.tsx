@@ -8,50 +8,50 @@ import { taskStore } from "../../../src/store";
 import { toJS } from "mobx";
 
 interface TreeItemProps {
-  id: string;
-  label: any;
-  onClick?: (e: MouseEvent) => void;
-  children?: any;
+    id: string;
+    label: any;
+    onClick?: (e: MouseEvent) => void;
+    children?: any;
 }
 
 export const TreeItem: React.FC<TreeItemProps> = observer(
-  ({ id, label, onClick, children }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+    ({ id, label, onClick, children }) => {
+        const [isExpanded, setIsExpanded] = useState(false);
 
-    const handleClick = (e: any) => {
-      if (onClick) onClick(e);
-    };
+        const handleClick = (e: any) => {
+            if (onClick) onClick(e);
+        };
 
-    return (
-      <div
-        className={
-          taskStore.currentTask?.id === id ? styles.active : styles.root
-        }
-        key={id}
-      >
-        <div onClick={handleClick}>
-          {children && children[0] && (
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsExpanded(!isExpanded);
-              }}
+        return (
+            <div
+                className={
+                    taskStore.currentTask?.id === id ? styles.active : styles.root
+                }
+                key={id}
             >
-              {isExpanded ? (
-                <KeyboardArrowDownIcon />
-              ) : (
-                <KeyboardArrowRightIcon />
-              )}
-            </Button>
-          )}
-          <span
-            style={children.length > 0 ? {} : { position: "relative", left: "65px" }}
-          >
+                <div onClick={handleClick}>
+                    {children && children[0] && (
+                        <Button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setIsExpanded(!isExpanded);
+                            }}
+                        >
+                            {isExpanded ? (
+                                <KeyboardArrowDownIcon />
+                            ) : (
+                                <KeyboardArrowRightIcon />
+                            )}
+                        </Button>
+                    )}
+                    <span
+                        style={children[0] ? {} : { position: "relative", left: "65px" }}
+                    >
             {label}
           </span>
-        </div>
-        <div style={{ marginLeft: "10px" }}>{isExpanded && children}</div>
-      </div>
-    );
-  }
+                </div>
+                <div style={{ marginLeft: "10px" }}>{isExpanded && children}</div>
+            </div>
+        );
+    }
 );
